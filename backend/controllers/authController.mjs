@@ -31,7 +31,17 @@ export const login = async(req,res)=>{
   try{
     let {email,password} = req.body;
     let user = await userModel.findOne({email});
-    let userExists = await bcrypt.compare(password,user.password);
+    if(!user){
+      return res.status(401).json({
+        message : 'user not found',
+        success : false
+      })
+    }
+    let checkPassword = await bcrypt.compare(password,user.password);
+    if(!checkPassword) return res.status(401).json({
+      message : 'password is incorrect',
+      success : false
+    })
     let token = jwt.sign({email,userId:user._id},process.env.SECRET_KEY);
     res.status(200).json({
       token,
