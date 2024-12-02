@@ -7,6 +7,11 @@ import jwt from 'jsonwebtoken'
 export const register = async(req,res)=>{
   try{
     let {fullname,email,password} = req.body;
+    let userExist = await userModel.findOne({email});
+    if(userExist) return res.json({
+      message : "user already exists",
+      success : false
+    })
     let hash = await bcrypt.hash(password,10);
     let user = await userModel.create({
       fullname,
