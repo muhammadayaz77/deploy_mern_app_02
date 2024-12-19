@@ -17,7 +17,6 @@ let applicationSchema = new mongoose.Schema({
     enum : ['pending','accepted','rejected'],
     default : 'pending'
   }
- 
 },{timestamps : true})
 
 export const Application = mongoose.model('Job',applicationSchema)

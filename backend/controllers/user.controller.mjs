@@ -80,8 +80,9 @@ export const login = async (req, res) => {
       .status(200)
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpsOnly: true,
+        httpOnly: true,
         sameSite: "strict",
+        secure : false
       })
       .json({
         message: `Welcom back ${user.fullname}`,
@@ -112,30 +113,25 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, bio, skills } = req.body;
-    if (!fullname || !email || !phoneNumber || !bio || !skills) {
-      res.status(400).json({
-        message: "Something is missing",
-        success: false,
-      });
-    }
 
     // cloudinary ayega idher
 
-    let skillArray = skills.split(",");
-    let userId = red.id;
+    let skillArray = skills ? skills.split(",") : [];
+    let userId = req.id;
 
     let user = await userModel.findById(userId);
     if (!user) {
       return res.status(400).json({
         message: "User not found",
-        success: false,
+        success: false
       });
     }
-    user.fullname = fullname;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.profile.bio = bio;
-    user.profile.skills = skillArray;
+    
+    if(fullname) user.fullname = fullname;
+    if(email) user.email = email;
+    if(phoneNumber) user.phoneNumber = phoneNumber;
+    if(bio) user.profile.bio = bio;
+    if(skills) user.profile.skills = skillArray;
     await user.save();
     user = {
       _id: user._id,
@@ -152,8 +148,8 @@ export const updateProfile = async (req, res) => {
       })
   } catch (err) {
     return res.status(200).json({
-      message: err.message,
-      success: false,
+      message : err.message, 
+      success : false
     });
   }
 };

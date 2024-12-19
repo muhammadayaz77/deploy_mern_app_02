@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 dotenv.config();
 let app = express();
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
   origin : 'http://localhost:5173',
@@ -19,6 +19,7 @@ app.use('/user',userRouter)
 app.get("/ping",(req,res)=>{
   res.send("pong")
 })
+
 
 app.listen(PORT,()=>{
   console.log('running on http://localhost:3000');
