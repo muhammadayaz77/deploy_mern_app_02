@@ -34,6 +34,10 @@ let jobSchema = new mongoose.Schema({
     ref : 'Company',
     require : true,
   },
+  experienceLevel : {
+    type : String,
+    require : true
+  },
   created_by : {
     type : mongoose.Schema.Types.ObjectId,
     ref : 'User',
@@ -45,4 +49,5 @@ let jobSchema = new mongoose.Schema({
   }],
 },{timestamps : true})
 
-export const Job = mongoose.model('Job',jobSchema)
+const Job = mongoose.model('Job',jobSchema)
+export default Job;

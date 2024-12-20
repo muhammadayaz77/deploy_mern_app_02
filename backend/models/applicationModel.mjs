@@ -19,4 +19,4 @@ let applicationSchema = new mongoose.Schema({
   }
 },{timestamps : true})
 
-export const Application = mongoose.model('Job',applicationSchema)
+export const Application = mongoose.model('Application',applicationSchema)

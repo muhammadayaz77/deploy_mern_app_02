@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-
-
 let companySchema = new mongoose.Schema({
   name : {
     type : String,
@@ -26,4 +24,4 @@ let companySchema = new mongoose.Schema({
  
 },{timestamps : true})
 
-export const Company = mongoose.model('Job',companySchema)
+export const Company = mongoose.model('Company',companySchema)
