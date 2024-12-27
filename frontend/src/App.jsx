@@ -1,8 +1,11 @@
 import React from 'react'
+import Routes from './pages/Routes'
 
 function App() {
   return (
-    <div className='text-red-700 font-bold'>App</div>
+    <>
+      <Routes></Routes>
+    </>
   )
 }
 
