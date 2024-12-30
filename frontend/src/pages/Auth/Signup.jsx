@@ -5,8 +5,13 @@ import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import { USER_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner"
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 function Signup() {
+  const {loading} = useSelector(store => store.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let [input, setInput] = React.useState({
     fullname : '',
@@ -36,6 +41,7 @@ function Signup() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     let formData = new FormData();
     formData.append('fullname', input.fullname);
     formData.append('email', input.email);
@@ -59,7 +65,7 @@ function Signup() {
       console.log(error);
       toast.error(error.response.data.message);
     });
-    console.log(input);
+    dispatch(setLoading(false));
   }
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -175,12 +181,10 @@ function Signup() {
                   accept="image/*"
                   type="file" />
                 </div>
-              <button
-                type="submit"
-                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 foc us:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Signup
-              </button>
+                {
+                    loading ?  <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 foc us:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 flex justify-center items-center "><Loader2 className='animate-spin' /> &nbsp;Please Wait</button> : 
+                  <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 foc us:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Signup</button>
+                }
               <span className="text-sm">Already have an account? </span>
               <Link
                 to="/auth/login"

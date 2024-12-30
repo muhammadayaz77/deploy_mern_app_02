@@ -5,9 +5,13 @@ import { RadioGroup, RadioGroupItem } from '../../components/ui/radio-group'
 import axios from 'axios'
 import { USER_API_END_POINT } from '../../utils/constant'
 import { toast } from "sonner"
-
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '../../redux/authSlice'
+import { Loader2 } from 'lucide-react'
 
 function Login() {
+  let {loading} = useSelector(state => state.auth);
+  let dispatch = useDispatch();
   const navigate = useNavigate();
   let [input, setInput] = useState({
     email : '',
@@ -30,6 +34,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true));
       await axios.post(`${USER_API_END_POINT  }/user/login`, input,{
         headers: {
           'Content-Type': 'application/json'
@@ -44,7 +49,9 @@ function Login() {
       console.log(error);
       toast.error(error.response.data.message);
     }
-    console.log(input);
+    finally{
+      dispatch(setLoading(false));   
+    }
   }
   return (
     <section class="bg-gray-50 dark:bg-gray-900">
@@ -94,7 +101,11 @@ function Login() {
                       </div>
                       <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline dark:text-primary-500">Forgot password?</a>
                   </div>
+                  {
+                    loading ?  <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 foc us:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 flex justify-center items-center "><Loader2 className='animate-spin' /> &nbsp;Please Wait</button> : 
                   <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 foc us:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                }
+                
                   <Link to='/auth/signup' class="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <a href="#" class="font-medium  text-blue-600 hover:text-blue-700 hover:underline dark:text-primary-500">Sign up</a>
                   </Link>
