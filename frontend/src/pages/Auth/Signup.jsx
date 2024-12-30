@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { Label } from "../../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
 import { USER_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner"
+import axios from "axios";
 
 function Signup() {
+  const navigate = useNavigate();
   let [input, setInput] = React.useState({
     fullname : '',
     email : '',
@@ -43,7 +45,6 @@ function Signup() {
     if(input.file){
       formData.append('file', input.file);
     }
-    try {
       await axios.post(`${USER_API_END_POINT}/user/create`, formData,{
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -51,11 +52,13 @@ function Signup() {
         withCredentials : true
       })
       .then(res => {
-        toast.success('User Created Successfully');
+        toast.success(res.data.message);
+        navigate('/auth/login');
       })
-    } catch (error) {
+     .catch(error => {
       console.log(error);
-    }
+      toast.error(error.response.data.message);
+    });
     console.log(input);
   }
   return (
@@ -160,7 +163,7 @@ function Signup() {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem
                       name="role"
-                      value="recruite" id="r2" />
+                      value="recruiter" id="r2" />
                       <Label htmlFor="r2">Recruiter</Label>
                     </div>
                 </div>
