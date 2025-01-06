@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   let user = false;
   return (
-    <div className="flex p-4 justify-between items-center px-24 h-15 text-black">
+    <div className="flex p-4 justify-between items-center mx-20 h-15 text-black">
       <div>
         <h1 className="text-2xl font-bold">
           <span>Job</span>
@@ -20,9 +20,9 @@ function Navbar() {
         </h1>
       </div>
       <ul className="flex items-center gap-5">
-        <li>Home</li>
-        <li>Jobs</li>
-        <li>Browse</li>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to='/jobs'>Jobs</Link></li>
+        <li><Link to='/browse'>Browse</Link></li>
         {
           !user ? (
             <div className="flex items-center gap-1">  
