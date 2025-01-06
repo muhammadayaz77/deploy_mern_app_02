@@ -1,8 +1,13 @@
 import React from 'react'
+import HeroSection from '../../components/HeroSection'
+import CategoryCarousel from '../../components/CategoryCarousel'
 
 function Home() {
   return (
-    <div>Home</div>
+    <>
+    <HeroSection />
+    <CategoryCarousel />
+    </>
   )
 }
 
