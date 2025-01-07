@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import About from './About'
 import Navbar from '../../components/shared/Navbar'
 import Jobs from './Jobs'
+import Browse from './Browse'
 
 function Index() {
   return (
@@ -13,6 +14,7 @@ function Index() {
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
       <Route path='/jobs' element={<Jobs />} />
+      <Route path='/browse' element={<Browse />} />
       <Route path="/*" element={<>No Page Found</>} />
     </Routes>
     </>
