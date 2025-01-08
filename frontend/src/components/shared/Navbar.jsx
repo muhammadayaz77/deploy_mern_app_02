@@ -64,8 +64,16 @@ function Navbar() {
               </div>
             </div>
               <ul className="text-sm text-gray-700 mt-3">
-                <li className="flex items-center" ><User2 /> <Button variant="link">View Profile</Button></li>
-                <li className="flex items-center" ><LogOut /> <Button variant="link">Logout</Button></li>
+                <li className="flex items-center" ><User2 />
+                <Button 
+                variant="link">
+                <Link to='/profile'>
+                  View Profile
+                </Link>
+                  </Button>
+                </li>
+                <li className="flex items-center" ><LogOut /> <Button variant="link">Logout</Button>                
+                </li>
               </ul> 
           </PopoverContent>
         </Popover>

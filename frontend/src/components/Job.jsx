@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Job() {
+  let navigate = useNavigate();
+  const jobId = 123;
   return (
     <div className="text-sm border shadow-lg px-4 py-2">
     <div className="flex justify-between items-center">
@@ -35,7 +38,9 @@ function Job() {
       </div>
     </div>
     <div className="text-sm my-3">
-      <button className="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg font-semibold mr-2">Details</button>
+      <button className="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg font-semibold mr-2"
+      onClick={() => navigate(`/description/${jobId}`)}
+      >Details</button>
       <button className="bg-[#6A38C2] hover:bg-[#6435b6] text-white px-4 py-2 rounded-lg font-semibold">Save For Laters</button>
     </div>
   </div>
