@@ -1,21 +1,27 @@
 import userModel from "../models/userModel.mjs";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import getDataUri from "../config/dataUri.mjs";
+import cloudinary from "../config/cloudinary.mjs";
 
 export const register = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, password, role } = req.body;
-    console.log(req.body);
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
         success: false,
       });
     }
+
+    let file = req.file;
+    let fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     let user = await userModel.findOne({ email });
     if (user)
       return res.json({
-        message: "user already exists with this email",
+        message: "User already exists with this email",
         success: false,
       });
     let hashedPassword = await bcrypt.hash(password, 10);
@@ -25,6 +31,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile : {
+        profilePhoto : cloudResponse.secure_url
+      }
     });
     res.status(200).json({
       message: "Account created successfully",
@@ -114,8 +123,10 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, bio, skills } = req.body;
-
     // cloudinary ayega idher
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     let skillArray = skills ? skills.split(",") : [];
     let userId = req.id;
@@ -133,6 +144,11 @@ export const updateProfile = async (req, res) => {
     if(phoneNumber) user.phoneNumber = phoneNumber;
     if(bio) user.profile.bio = bio;
     if(skills) user.profile.skills = skillArray;
+    if(cloudResponse)
+    {
+      user.profile.resume = cloudResponse.secure_url
+      user.profile.resumeOriginalName = file.originalname
+    }
     await user.save();
     user = {
       _id: user._id,

@@ -7,11 +7,24 @@ import {
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/constant";
+import { setUser } from "../../redux/authSlice";
 
 function Navbar() {
-  let {user} = useSelector(store => store.auth)
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
+  let {user} = useSelector(store => store.auth);
+  const logoutHandler = async() => {
+      await axios.get(`${USER_API_END_POINT}/user/logout`)
+      .then(res => {
+        dispatch(setUser(null));
+        navigate('/')
+      })
+      .catch(err => console.log(err))
+  }
   return (
     <div className="flex p-4 justify-between items-center mx-20 h-15 text-black">
       <div>
@@ -44,7 +57,7 @@ function Navbar() {
             <Avatar>
               <AvatarImage
                 className="cursor-pointer"
-                src="https://github.com/shadcn.png"
+                src={user?.profile?.profilePhoto}
                 />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
@@ -54,25 +67,27 @@ function Navbar() {
               <Avatar>
                 <AvatarImage
                   className="cursor-pointer"
-                  src="https://github.com/shadcn.png"
+                  src={user?.profile?.profilePhoto}
                   />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div>
-              <h1 className="font-medium">Ayaz Mern Stack</h1>
-              <p className="text-sm text-gray-500">Lorem ipsum dolor sit .</p>
+              <h1 className="font-medium">{user?.fullname}</h1>
+              <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
               </div>
             </div>
               <ul className="text-sm text-gray-700 mt-3">
-                <li className="flex items-center" ><User2 />
+                <Link to='/profile' className="flex items-center" ><User2 />
+                {/* <Link > */}
                 <Button 
                 variant="link">
-                <Link to='/profile'>
                   View Profile
-                </Link>
                   </Button>
-                </li>
-                <li className="flex items-center" ><LogOut /> <Button variant="link">Logout</Button>                
+                {/* </Link> */}
+                </Link>
+                <li className="flex items-center" ><LogOut /> <Button 
+                onClick={logoutHandler}
+                variant="link">Logout</Button>                
                 </li>
               </ul> 
           </PopoverContent>

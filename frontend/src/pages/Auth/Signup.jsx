@@ -178,7 +178,6 @@ function Signup() {
                   <input
                   onChange={handleChangeFile}       
                   name="file"
-                  accept="image/*"
                   type="file" />
                 </div>
                 {
