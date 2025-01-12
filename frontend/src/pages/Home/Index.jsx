@@ -7,8 +7,10 @@ import Jobs from './Jobs'
 import Browse from './Browse'
 import Profile from './Profile'
 import Description from '../../components/Description'
+import useGetAllJobs from '../../hooks/useGetAllJobs'
 
 function Index() {
+  useGetAllJobs();
   return (
     <>
     <Navbar />
