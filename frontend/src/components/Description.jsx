@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { useParams } from 'react-router-dom';   
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,8 @@ import { toast } from 'sonner';
 function Description() {
   const {singleJob} = useSelector(store => store.job)
   const {user} = useSelector(store => store.auth)
-  let isApplied = singleJob.applications?.some(app => app.applicant === user._id);
+  let isInitiallyApplied = singleJob.applications?.some(app => app.applicant === user._id);
+  const [isApplied,setIsApplied] = useState(isInitiallyApplied)
   let params = useParams();
   // get single Job
   let dispatch = useDispatch();
@@ -20,6 +21,15 @@ function Description() {
     await axios.get(`${APPLICATIONS_API_END_POINT}/apply/${jobId}`,{withCredentials:true})
     .then(res => {
       toast.success(res.data.message);
+      setIsApplied(true);
+      let updateSingleJob = {
+        ...singleJob,
+        applications : [
+          ...singleJob.applications,
+          {applicant : user?._id}
+        ]
+      }
+      dispatch(setSingleJob(updateSingleJob)) // Real Time UI update
       console.log(res.data)
     })
     .catch(err => {
@@ -34,7 +44,10 @@ function Description() {
         withCredentials : true
       })
       .then(res => {
+        console.log(res)
+        console.log(user)
         dispatch(setSingleJob(res.data.job))
+        setIsApplied(res.data.job.applications.some(application => application.applicant == user?._id))
       })
       .catch(err => {
         console.log(err)

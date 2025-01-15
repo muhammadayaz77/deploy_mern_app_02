@@ -13,9 +13,8 @@ export const register = async (req, res) => {
         success: false,
       });
     }
-
-    let file = req.file;
-    let fileUri = getDataUri(file);
+      let file = req.file;
+      let fileUri = getDataUri(file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     let user = await userModel.findOne({ email });
@@ -32,7 +31,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
       profile : {
-        profilePhoto : cloudResponse.secure_url
+        profilePhoto : cloudResponse.secure_url || ''
       }
     });
     res.status(200).json({
