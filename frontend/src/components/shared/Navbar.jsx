@@ -30,7 +30,7 @@ function Navbar() {
       <div>
         <h1 className="text-2xl font-bold">
           <span>Job</span>
-          <span className="text-red-500">Portal</span>
+          <span className="text-red-500 font-protestFont">Portal</span>
         </h1>
       </div>
       <ul className="flex items-center gap-5">
