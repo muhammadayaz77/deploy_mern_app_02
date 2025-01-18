@@ -6,7 +6,7 @@ function HeroSection() {
   return (
     <div className='flex flex-col items-center w-full'>
       <p className='bg-gray-100 text-[#f83002] px-2 py-[1px] mt-9 mb-5 font-semibold rounded-xl'>No. 1 Job Hunt Website.</p>
-      <h1 className='text-5xl text-center font-bold'><span>Search Apply & <br /> Get Your</span> <span className='text-[#6A38C2]'>Dream Jobs</span></h1>
+      <h1 className='text-h1 leading-tight'><span>Search Apply & <br /> Get Your</span> <span className='text-[#6A38C2]'>Dream Jobs</span></h1>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis nulla quisquam libero autem facil</p>
       <div className='w-[40%] mx-auto flex items-center justify-center mt-5'>
   <input 
