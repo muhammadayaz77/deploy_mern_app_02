@@ -28,15 +28,25 @@ function Navbar() {
   return (
     <div className="flex p-4 justify-between items-center mx-20 h-15 text-black">
       <div>
-        <h1 className="text-2xl font-bold font-protestFont">
+        <Link to='/' className="text-2xl font-bold font-protestFont cursor-pointer select-none">
           <span>Job</span>
           <span className="text-red-500">Portal</span>
-        </h1>
+        </Link>
       </div>
       <ul className="flex items-center gap-5">
-        <li><Link to='/'>Home</Link></li>
-        <li><Link to='/jobs'>Jobs</Link></li>
-        <li><Link to='/browse'>Browse</Link></li>
+        {
+          user && user.role == 'recruiter' ? 
+          <>
+          <li><Link to='/admin/companies'>Companies</Link></li>
+          <li><Link to='/admin/jobs'>Jobs</Link></li>
+          </>
+          :
+          <>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/jobs'>Jobs</Link></li>
+          <li><Link to='/browse'>Browse</Link></li>
+          </>
+        }
         {
           !user ? (
             <div className="flex items-center gap-1">  
@@ -62,7 +72,7 @@ function Navbar() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
-          <PopoverContent className="w-80">
+          <PopoverContent className="w-80 bg-white">
             <div className="flex items-center gap-3">
               <Avatar>
                 <AvatarImage
@@ -77,6 +87,9 @@ function Navbar() {
               </div>
             </div>
               <ul className="text-sm text-gray-700 mt-3">
+              {
+                  user && user.role == 'student' &&
+
                 <Link to='/profile' className="flex items-center" ><User2 />
                 {/* <Link > */}
                 <Button 
@@ -85,6 +98,7 @@ function Navbar() {
                   </Button>
                 {/* </Link> */}
                 </Link>
+                }
                 <li className="flex items-center" ><LogOut /> <Button 
                 onClick={logoutHandler}
                 variant="link">Logout</Button>                

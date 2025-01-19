@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Home from './Home/Index.jsx'
 import Auth from './Auth/Index.jsx'
-import Navbar from '../components/shared/Navbar'
+import Admin from './Admin/Index.jsx'
 
 function Index() {
   return (
@@ -11,6 +11,7 @@ function Index() {
     <Routes>
       <Route path="/*" element={<Home />} />
       <Route path="/auth/*" element={<Auth />} />
+      <Route path="/admin/*" element={<Admin />} />
     </Routes>   
     </BrowserRouter>
 

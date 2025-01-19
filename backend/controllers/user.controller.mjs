@@ -7,6 +7,7 @@ import cloudinary from "../config/cloudinary.mjs";
 export const register = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, password, role } = req.body;
+    console.log(req.body)
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
@@ -14,6 +15,12 @@ export const register = async (req, res) => {
       });
     }
       let file = req.file;
+      if(!file){
+        return res.status(400).json({
+          message : "Please enter profile picture",
+          success : true,
+        })
+      }
       let fileUri = getDataUri(file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
