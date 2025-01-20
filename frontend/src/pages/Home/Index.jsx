@@ -15,7 +15,10 @@ function Index() {
   let navigate = useNavigate();
   let {user} = useSelector(store => store.auth);
   useEffect(() => {
-    if(user.role === 'recruiter'){
+    if(user == null){
+      navigate("/auth/login");
+    }
+    else if(user.role === 'recruiter'){
       navigate("/admin/companies");
     }
   },[])
