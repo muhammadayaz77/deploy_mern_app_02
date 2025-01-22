@@ -16,7 +16,7 @@ function useGetAllJobs() {
         console.log(res)
       })
       .catch(err => {
-        console.log(err)
+        console.log("Error"+err)
       })
     }
     fetchedAllJobs();
