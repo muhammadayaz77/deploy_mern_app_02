@@ -18,6 +18,7 @@ TableRow,
 } from "@/components/ui/table"
 import { Button } from '../ui/button';
 import { Edit2, MoreHorizontal } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const invoices = [
 {
@@ -34,6 +35,7 @@ paymentMethod: "PayPal",
 },
 ]
 function CompaniesTable() {
+  const {companies} = useSelector(store => store.company)
   return (
     <>
      <Table>
@@ -47,19 +49,25 @@ function CompaniesTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
+        {
+        companies?.length <=0 ?
+        <>
+        <span>You haven't registered any company yet.</span>
+        </>
+        :
+        companies?.slice()?.reverse().map((company) => (
+          <TableRow key={company._id}>
             <TableCell className="font-medium">
             <Avatar>
                       <AvatarImage
                         className="cursor-pointer w-10 h-10"
-                        src="https://github.com/shadcn.png"
+                        src={company.logo}
                         />
                       <AvatarFallback>CN</AvatarFallback>
           </Avatar>
             </TableCell>
-            <TableCell>Frontend Developer</TableCell>
-            <TableCell>Google</TableCell>
+            <TableCell>{company.name}</TableCell>
+            <TableCell>{company.createdAt.split("T")[0]}</TableCell>
             <TableCell className="text-right">
             <Popover>
       <PopoverTrigger asChild>
@@ -74,7 +82,9 @@ function CompaniesTable() {
     </Popover>
             </TableCell>
           </TableRow>
-        ))}
+        ))
+        
+        }
       </TableBody>
     </Table>
     </>

@@ -2,8 +2,10 @@ import React from 'react'
 import {Button} from '../../components/ui/button'
 import CompaniesTable from '../../components/admin/CompaniesTable'
 import { useNavigate } from 'react-router-dom'
+import useGetAllCompanies from '../../hooks/useGetAllCompanies'
 function Companies() {
   const navigate = useNavigate();
+  useGetAllCompanies();
   return (
     <div className='mx-40 mt-5'>
       <div className='flex justify-between'>
