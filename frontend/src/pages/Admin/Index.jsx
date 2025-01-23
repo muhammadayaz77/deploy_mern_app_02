@@ -3,6 +3,7 @@ import { Route,Routes } from 'react-router-dom'
 import Navbar from '../../components/shared/Navbar'
 import Companies from './Companies'
 import CompaniesCreate from '../../components/admin/CompaniesCreate'
+import CompaniesSetup from '../../components/admin/CompaniesSetup'
 function Index() {  
 
   return (
@@ -11,6 +12,7 @@ function Index() {
       <Routes>
         <Route path="/companies" element={<Companies />} />
         <Route path="/companies/create" element={<CompaniesCreate />} />
+        <Route path="/companies/:id" element={<CompaniesSetup />} />
       <Route path="/*" element={<>No Page Found</>} />
       </Routes>
     </div>
