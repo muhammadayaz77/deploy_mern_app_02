@@ -4,7 +4,7 @@ function LatestJobCards({item}) {
   return (
     <div className='text-sm border shadow-lg px-4 py-2'>
       <div>
-        <h1 className='font-semibold text-lg'>{item.company.name}</h1>
+        <h1 className='font-semibold text-lg'>{item.company?.name}</h1>
         <p className='text-slate-500 font-semibold'>{item.location}</p>
         <h2 className='font-bold text-lg'>{item.title}</h2>
         <p className='text-slate-500 mt-2 mb-4'>{item.description}</p>

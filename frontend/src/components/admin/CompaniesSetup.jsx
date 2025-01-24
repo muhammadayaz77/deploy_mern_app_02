@@ -7,8 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import useGetCompanyById from '../../hooks/useGetCompanyById';
 
 function CompaniesSetup() {
+  const params = useParams();
   const {singleCompany} = useSelector(store => store.company)
   const [input,setInput] = useState({
     companyName: '',
@@ -19,7 +21,6 @@ function CompaniesSetup() {
   })
   const navigate = useNavigate();
   const [loading,setLoading] = useState(false);
-  const params = useParams();
   const changeEventHandler = (e) => {
     setInput({
       ...input,
@@ -33,6 +34,7 @@ function CompaniesSetup() {
       file : e.target.files[0]
     })
   }
+  useGetCompanyById(params.id);
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(input)
@@ -78,7 +80,7 @@ function CompaniesSetup() {
     <div className='flex justify-center pt-5'>
     <form 
     onSubmit={handleSubmit}
-    className='w-[50%] border'>
+    className='w-[50%] mt-10'>
       <div className='flex items-center gap-4'>
         <Button 
         type='button'
