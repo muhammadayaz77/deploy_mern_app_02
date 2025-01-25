@@ -96,7 +96,8 @@ export const getAdminJobs = async (req,res) => {
     let adminId = req.id;
     const jobs = await Job.find({created_by : adminId})
     .populate({
-      path : 'company  '
+      path : 'company',
+      createdAt : -1
     });
     if(!jobs)
       return res.status(404).json({

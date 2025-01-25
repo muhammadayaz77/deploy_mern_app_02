@@ -16,11 +16,11 @@ function useGetAllAdminJobs() {
         console.log(res)
       })
       .catch(err => {
-        console.log("Error : "+err)
+        console.log("Error : "+err);
       })
     }
     fetchedAllAdminJobs();
-  },[])
+  },[dispatch])
 }
 
 export default useGetAllAdminJobs
