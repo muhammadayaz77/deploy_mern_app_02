@@ -5,8 +5,8 @@ import { applyJob, getApplications, getAppliedJobs, updateStatus } from "../cont
 let router = express.Router();
 
 
-router.get('/apply/:id',isAuthenticated,applyJob)
-router.get('/get',isAuthenticated,getAppliedJobs)
-router.get('/:id/applicants',isAuthenticated,getApplications)
-router.put('/:id/update',isAuthenticated,updateStatus)
+router.get('/apply/:id',isAuthenticated,applyJob);
+router.get('/get',isAuthenticated,getAppliedJobs);
+router.get('/:id/applicants',isAuthenticated,getApplications);
+router.put('/status/:id/update',isAuthenticated,updateStatus);
 export default router

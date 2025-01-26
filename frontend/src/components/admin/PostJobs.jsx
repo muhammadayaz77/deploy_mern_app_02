@@ -11,7 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useSelector } from "react-redux";
-let companyArray = [];
+import axios from "axios";
+import { JOB_API_END_POINT } from "../../utils/constant";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 function postJobs() {
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({
@@ -25,6 +28,7 @@ function postJobs() {
     position: 0,
     companyId: "",
   });
+  const navigate = useNavigate();
   const { companies } = useSelector((store) => store.company);
   const changeEventHandler = (e) => {
     setInput({
@@ -32,12 +36,30 @@ function postJobs() {
       [e.target.name]: e.target.value,
     });
   };
-  let handleSubmit = (e) => {
+  let handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(input);
+    try {
+      setLoading(true);
+      await axios.post(`${JOB_API_END_POINT}/post`,input,{
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        withCredentials : true,
+      }).
+      then(res => {
+        toast.success(res.data.message);
+        navigate('/admin/jobs')
+      })
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error)
+    }finally{
+      setLoading(false);
+    }  
   };
   const selectChangeHandler = (value) => {
-
+      const selectedCompany = companies.find((company) => company.name?.toLowerCase() === value.toLowerCase()); 
+      setInput({...input,companyId:selectedCompany._id});
   }
   return (
     <div className="flex justify-center pt-5">
@@ -131,7 +153,7 @@ function postJobs() {
             />
           </div>
           <div className="col-span-6">
-            <Select>
+            <Select onValueChange={selectChangeHandler}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a Company" />
               </SelectTrigger>
@@ -140,7 +162,7 @@ function postJobs() {
                   {
                     companies.length > 0 && companies.map((company) => 
                        (
-                        <SelectItem value={company._id}>{company.name}</SelectItem>
+                        <SelectItem value={company?.name}>{company.name}</SelectItem>
                        )
                       )
                   }

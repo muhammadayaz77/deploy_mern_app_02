@@ -17,7 +17,7 @@ TableHeader,
 TableRow,
 } from "@/components/ui/table"
 import { Button } from '../ui/button';
-import { Edit2, MoreHorizontal } from 'lucide-react';
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -78,10 +78,19 @@ function AdminJobsTable() {
       </PopoverTrigger>
       <PopoverContent className="w-50 bg-white">
        <div
+       className=''>
+       <div className='flex items-center gap-2 cursonp-pointer'>
+       <Edit2
        onClick={() => navigate(`/admin/companies/${job.company._id}`)}
-       className='flex items-center gap-2 cursor-pointer'>
-       <Edit2 className='w-5' />
+       className='w-5' />
        <span className='text-base'>Edit</span>
+       </div>
+       <div className='flex items-center gap-2 cursonp-pointer mt-2'>
+       <Eye
+       onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)}
+       className='w-5' />
+       <span className='text-base'>Applicants</span>
+       </div>
        </div>
       </PopoverContent>
     </Popover>

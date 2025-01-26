@@ -6,6 +6,7 @@ import CompaniesCreate from '../../components/admin/CompaniesCreate'
 import CompaniesSetup from '../../components/admin/CompaniesSetup'
 import AdminJobs from './AdminJobs'
 import PostJobs from '../../components/admin/PostJobs'
+import Applicants from '../../components/admin/Applicants'
 function Index() {  
 
   return (
@@ -17,6 +18,7 @@ function Index() {
         <Route path="/companies/:id" element={<CompaniesSetup />} />
         <Route path="/jobs" element={<AdminJobs />} />
         <Route path="/jobs/create" element={<PostJobs />} />
+        <Route path="/jobs/:id/applicants" element={<Applicants />} />
       <Route path="/*" element={<>No Page Found</>} />
       </Routes>
     </div>
