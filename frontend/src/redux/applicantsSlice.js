@@ -6,6 +6,7 @@ const applicantsSlice = createSlice({
     name: "applicants",
     initialState : {
       applicants : [],
+      
     },
     reducers: {
         setAllApplicants : (state, action) => {

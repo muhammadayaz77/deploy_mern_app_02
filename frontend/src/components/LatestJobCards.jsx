@@ -1,8 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function LatestJobCards({item}) {
+  let navigate = useNavigate()
+
   return (
-    <div className='text-sm border shadow-lg px-4 py-2'>
+    <div 
+    onClick={() => navigate(`/description/${item._id}`)}
+    className='text-sm border shadow-lg px-4 py-2'>
       <div>
         <h1 className='font-semibold text-lg'>{item.company?.name}</h1>
         <p className='text-slate-500 font-semibold'>{item.location}</p>

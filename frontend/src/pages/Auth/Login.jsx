@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Label } from '../../components/ui/label'
 import { RadioGroup, RadioGroupItem } from '../../components/ui/radio-group'
@@ -10,6 +10,7 @@ import { setLoading, setUser } from '../../redux/authSlice'
 import { Loader2 } from 'lucide-react'
 
 function Login() {
+  let {user} = useSelector(store => store.auth)
   let {loading} = useSelector(state => state.auth);
   let dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,6 +55,12 @@ function Login() {
       dispatch(setLoading(false));   
     }
   }
+  useEffect(() => {
+    if(user){
+      toast.success("You are already Login");
+       navigate("/");
+    }
+  },[])
   return (
     <section class="bg-gray-50 dark:bg-gray-900">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

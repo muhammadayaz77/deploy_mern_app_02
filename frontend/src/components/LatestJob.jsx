@@ -10,7 +10,8 @@ function LatestJob() {
       {
         allJobs.length > 0 ?
         allJobs.map((item,index)=> (
-          <LatestJobCards key={item._id} item={item} />
+          <LatestJobCards
+          key={item._id} item={item} />
         ))
         : 
         <span className='text-gray-700'>No Jobs Available</span>

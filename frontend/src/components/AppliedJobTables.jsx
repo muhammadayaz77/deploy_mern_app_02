@@ -10,6 +10,7 @@ TableHead,
 TableHeader,
 TableRow,
 } from "@/components/ui/table"
+import { useSelector } from 'react-redux'
 
 const invoices = [
 {
@@ -27,6 +28,7 @@ paymentMethod: "PayPal",
 ]
 
 function AppliedJobTables() {
+  let {allAppliedJobs} = useSelector(store => store.job)
   return (
     <div>
 
@@ -41,12 +43,16 @@ function AppliedJobTables() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">2-3-2025</TableCell>
-            <TableCell>Frontend Developer</TableCell>
-            <TableCell>Google</TableCell>
-            <TableCell className="text-right"><Badge className='bg-black text-white hover:text-white hover:bg-black'>Selected</Badge></TableCell>
+        {
+        allAppliedJobs.length <= 0 ?
+        <span>You haven't applied any yet.</span>
+        :
+        allAppliedJobs.map((item) => (
+          <TableRow key={item?._id}>
+            <TableCell>{item.job.title}</TableCell>
+            <TableCell className="font-medium">{item.createdAt.split("T")[0]}</TableCell>
+            <TableCell>{item.job.company?.name}</TableCell>
+            <TableCell className="text-right"><Badge className={`${item?.status == 'rejected ' ? 'bg-red-400' : item?.status === 'pending' ? 'bg-gray-400 text-white hover:text-white hover:bg-gray-400' : 'bg-green-400'}`}>{item.status.toUpperCase()}</Badge></TableCell>
           </TableRow>
         ))}
       </TableBody>

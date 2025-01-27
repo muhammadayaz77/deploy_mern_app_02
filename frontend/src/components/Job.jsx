@@ -12,7 +12,7 @@ function Job({item}) {
   return (
     <div className="text-sm border shadow-lg px-4 py-2">
     <div className="flex justify-between items-center">
-      <p>{daysAgoFtn(item.createdAt) == 0 ? "Today" : `${daysAgoFtn(item.createdAt)} days ago`}</p>
+      <p>{daysAgoFtn(item?.createdAt.split('T')[0]) == 0 ? "Today" : `${daysAgoFtn(item.createdAt)} days ago`}</p>
     </div>
     <div className="flex my-3 items-center">
       <div>
