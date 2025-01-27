@@ -13,8 +13,8 @@ const useGetAppliedJob = () => {
         withCredentials:true
       })
       .then(res => {
-        dispatch(setAllAppliedJobs(res.data.applications))
         console.log(res)
+        dispatch(setAllAppliedJobs(res.data.applications))
       })
       .catch(err => {
         console.log(err)

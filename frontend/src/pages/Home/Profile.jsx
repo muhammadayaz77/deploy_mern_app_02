@@ -8,9 +8,9 @@ import { useSelector } from 'react-redux';
 import useGetAppliedJob from '../../hooks/useGetAppliedJob';
 
 function Profile() {
+  useGetAppliedJob();
   let [open,setOpen] = useState(false);
   let {user} = useSelector(store => store.auth);
-  useGetAppliedJob();
   return (
     <>
     <div className='border border-gray-200 max-w-3xl mx-auto p-6 mt-8'>

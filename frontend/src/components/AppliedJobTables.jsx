@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Badge } from "../components/ui/badge"
 import {
 Table,
@@ -10,25 +10,17 @@ TableHead,
 TableHeader,
 TableRow,
 } from "@/components/ui/table"
-import { useSelector } from 'react-redux'
-
-const invoices = [
-{
-invoice: "INV001",
-paymentStatus: "Paid",
-totalAmount: "$250.00",
-paymentMethod: "Credit Card",
-},
-{
-invoice: "INV002",
-paymentStatus: "Pending",
-totalAmount: "$150.00",
-paymentMethod: "PayPal",
-},
-]
+import { useDispatch, useSelector } from 'react-redux'
+import { setAllAppliedJobs } from '../redux/jobSlice'
 
 function AppliedJobTables() {
   let {allAppliedJobs} = useSelector(store => store.job)
+  let dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(setAllAppliedJobs([]))
+    }
+  },[])
   return (
     <div>
 
@@ -47,7 +39,7 @@ function AppliedJobTables() {
         allAppliedJobs.length <= 0 ?
         <span>You haven't applied any yet.</span>
         :
-        allAppliedJobs.map((item) => (
+        allAppliedJobs?.map((item) => (
           <TableRow key={item?._id}>
             <TableCell>{item.job.title}</TableCell>
             <TableCell className="font-medium">{item.createdAt.split("T")[0]}</TableCell>
