@@ -6,14 +6,26 @@ import AppliedJobTables from '../../components/AppliedJobTables';
 import UpdateProfileDialog from '../../components/UpdateProfileDialog';
 import { useSelector } from 'react-redux';
 import useGetAppliedJob from '../../hooks/useGetAppliedJob';
+import {useGSAP} from '@gsap/react'
+import gsap from 'gsap'
 
 function Profile() {
   useGetAppliedJob();
   let [open,setOpen] = useState(false);
   let {user} = useSelector(store => store.auth);
+
+  useGSAP(() => {
+    gsap.from('#profile',{
+      y : 30,
+      opacity : 0,
+      duration : 0.8,
+      delay : 0.3
+    })
+  })
+
   return (
     <>
-    <div className='border border-gray-200 max-w-3xl mx-auto p-6 mt-8'>
+    <div id='profile' className='border border-gray-200 max-w-3xl mx-auto p-6 mt-8'>
       <div className='flex justify-between'>
          <div className='flex items-center gap-4 mt-5'>
          <Avatar>

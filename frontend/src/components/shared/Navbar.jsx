@@ -49,7 +49,7 @@ function Navbar() {
         }
         {
           !user ? (
-            <div className="flex items-center gap-1">  
+            <d  iv className="flex items-center gap-1">  
               <Link to='/auth/login'>
             <Button className=' rounded-lg border-[1px] border-gray-600'>
             Login
@@ -60,7 +60,7 @@ function Navbar() {
               Signup
             </Button>
             </Link>
-            </div>
+            </d>
           ) : (
             <Popover>
           <PopoverTrigger asChild>
