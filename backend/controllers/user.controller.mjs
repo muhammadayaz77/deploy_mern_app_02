@@ -49,6 +49,7 @@ export const register = async (req, res) => {
     return res.status(404).json({
       message: err.message,
       success: false,
+      
     });
   }
 };
@@ -112,20 +113,26 @@ export const login = async (req, res) => {
     });
   }
 };
-
 export const logout = async (req, res) => {
   try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false, // Change to true if using HTTPS
+      sameSite: "lax",
+    });
+
+    return res.status(200).json({
       message: "Logged out successfully",
       success: true,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       message: error.message,
       success: false,
     });
   }
 };
+
 export const updateProfile = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, bio, skills } = req.body;

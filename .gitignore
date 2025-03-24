@@ -1,3 +1,7 @@
 /backend/node_modules
 /backend/.env
 /frontend/node_modules
+
+
+
+backend : https://deploymernapp02-72u3z2lty-muhammadayaz77s-projects.vercel.app/ping

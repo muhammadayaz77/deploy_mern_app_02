@@ -12,9 +12,12 @@ let app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-  origin : 'http://localhost:5173',
-  credentials : true
+  origin: "http://localhost:5173", // Explicitly allow frontend origin
+  credentials: true, // Allow cookies & credentials
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 }));
+
 let PORT = process.env.PORT || 3000;
 connectDB();
 

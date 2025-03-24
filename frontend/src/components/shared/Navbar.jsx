@@ -18,10 +18,10 @@ function Navbar() {
   let navigate = useNavigate();
   let {user} = useSelector(store => store.auth);
   const logoutHandler = async() => {
-      await axios.get(`${USER_API_END_POINT}/user/logout`)
+      await axios.get(`${USER_API_END_POINT}/user/logout`,{withCredentials : true})
       .then(res => {
         dispatch(setUser(null));
-        navigate('/')
+        navigate('/');
       })
       .catch(err => console.log(err))
   }

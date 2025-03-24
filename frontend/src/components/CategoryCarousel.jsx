@@ -27,7 +27,7 @@ function CategoryCarousel() {
     }
   return (
     <>
-   <div className='flex justify-center mt-5'>
+   <div className='flex justify-center mt-5 hover:text-[#6A38C2] hover:cursor-grab active:cursor-grabbing'>
    <Carousel
       opts={{
         align: "start",
