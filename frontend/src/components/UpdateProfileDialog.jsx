@@ -49,7 +49,7 @@ function UpdateProfileDialog({open,setOpen}) {
     formData.append('bio',input.bio)
     formData.append('skills',input.skills)
     if(!input.file){
-      toast.error("You must add profile picture")
+      toast.error("You must add profile picture");
     }
     if(input.file){
       formData.append('file',input.file)

@@ -136,12 +136,6 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     let { fullname, email, phoneNumber, bio, skills } = req.body;
-    // cloudinary ayega idher
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
-    let skillArray = skills ? skills.split(",") : [];
     let userId = req.id;
 
     let user = await userModel.findById(userId);
@@ -151,19 +145,25 @@ export const updateProfile = async (req, res) => {
         success: false
       });
     }
-    
-    if(fullname) user.fullname = fullname;
-    if(email) user.email = email;
-    if(phoneNumber) user.phoneNumber = phoneNumber;
-    if(bio) user.profile.bio = bio;
-    if(skills) user.profile.skills = skillArray;
-    if(cloudResponse)
-    {
-      user.profile.resume = cloudResponse.secure_url
-      user.profile.resumeOriginalName = file.originalname
+
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skills.split(",");
+
+    // ✅ Only run this block if a file is uploaded
+    if (req.file) {
+      const file = req.file;
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      user.profile.resume = cloudResponse.secure_url;
+      user.profile.resumeOriginalName = file.originalname;
     }
+
     await user.save();
-    user = {
+
+    const updatedUser = {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
@@ -171,15 +171,17 @@ export const updateProfile = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
-     return res.status(200).json({
-        message : `Profile updated successfully`,
-        user,
-        success : true
-      })
-  } catch (err) {
+
     return res.status(200).json({
-      message : err.message, 
-      success : false
+      message: `Profile updated successfully`,
+      user: updatedUser,
+      success: true
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+      success: false
     });
   }
 };

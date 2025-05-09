@@ -7,7 +7,7 @@ function LatestJobCards({item}) {
   return (
     <div 
     onClick={() => navigate(`/description/${item._id}`)}
-    className='text-sm border shadow-lg px-4 py-2'>
+    className='text-sm border shadow-lg px-4 py-2 cursor-pointer'>
       <div>
         <h1 className='font-semibold text-lg'>{item.company?.name}</h1>
         <p className='text-slate-500 font-semibold'>{item.location}</p>
