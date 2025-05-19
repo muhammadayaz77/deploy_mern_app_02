@@ -37,7 +37,12 @@ app.get("/ping",(req,res)=>{
   res.send("pong")
 })
 
+// ✅ Only listen if running locally (development)
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
 
-app.listen(PORT,()=>{
-  console.log('running on http://localhost:3000');
-})
+// ✅ Export the app for Vercel (serverless function)
+export default app;
